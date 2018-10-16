@@ -7,16 +7,19 @@ section {
   background-position: center;
   width: 100vw;
   height: 100vh;
+
 }
 .section-1 {
    width: 100vw;
    height: 100vh;	
   background-image: url('../asset/img/bg11.jpg');
+
 }
 .section-2 {
 	width: 100vw;
    height: 100vh;
   background-image: url('../asset/img/bg12.jpg');
+
 }
 .section-3 {
 	width: 100vw;
@@ -24,23 +27,37 @@ section {
   background-image: url('../asset/img/bg3.jpg');
 }
 .title{
-	line-height: 300px;
-	margin-left: 500px;
+	font-size: 6vmin;
+	text-align: center;
+	margin-left: 30vw;
+	position: absolute;
+	margin-top: 30vh;
 }
 .desc{
-	margin-left: 360px;
+	font-size:3vmin;
+	text-align: center;
+	margin-left: 25vw;
+	position: absolute;
+	margin-top: 60vh;
 }
 .sub-title{
-	line-height: 300px;
-	margin-left: 300px;
+	font-size: 6vmin;
+	margin-left: 18vw;
+	margin-top: 27vh;
+	position: absolute;
 }
 .sub-desc{
-	margin-left: 150px;
+	margin-left: 10vw;
+	position: absolute;
+	margin-top: 43vh;
+	font-size: 3vmin;
+	width: 70vh;
 }
 .hotel{
-	width: 300px;
-	height: 300px;
+	width: 36vmin;
+	height: 36vmin;
 	position: absolute;
-	margin-left: 900px;
-	margin-top: -200px;
+	margin-left: 66vw;
+	margin-top: 30vh;
+	overflow: hidden;
 }
