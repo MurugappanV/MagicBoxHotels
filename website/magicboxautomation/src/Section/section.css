@@ -28,15 +28,14 @@ section {
 }
 .title{
 	font-size: 6vmin;
-	text-align: center;
-	margin-left: 30vw;
+	margin-left: 27vw;
 	position: absolute;
 	margin-top: 30vh;
 }
 .desc{
 	font-size:3vmin;
 	text-align: center;
-	margin-left: 25vw;
+	margin-left: 22vw;
 	position: absolute;
 	margin-top: 60vh;
 }
