@@ -1,0 +1,14 @@
+*{
+	margin:0;
+	padding:0;
+}
+#navbar{
+	width: 100vw;
+	background-color: #cecece;
+
+	height: 60px;
+	opacity: 0.5;
+}
+.logo{
+	margin-left: 20px;
+}
