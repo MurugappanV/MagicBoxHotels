@@ -60,3 +60,10 @@ section {
 	margin-top: 30vh;
 	overflow: hidden;
 }
+.logopic{
+	width: 10vw;
+	height: 10vh;
+	position: absolute;
+	margin-top: 45vh;
+	margin-left:47vw;
+}
