@@ -67,3 +67,11 @@ section {
 	margin-top: 45vh;
 	margin-left:47vw;
 }
+.points{
+	position: absolute;
+	margin-top: 15vh;
+	margin-left: 60vw;
+}
+.listtype{
+	list-style: none;
+}
