@@ -5,7 +5,7 @@
  * @flow
  */
 import React, { PureComponent } from "react";
-import { StyleSheet, Image, View, TouchbleOpacity } from "react-native";
+import { StyleSheet, Image, View, TouchableOpacity } from "react-native";
 import { Images, Colors, Metrics, DefaultValues, ScaleSampDesgWidth, ScaleSampDesgHeight } from "../../asset";
 import { MediumText, SmallText } from "../Texts";
 import Carousel from "react-native-snap-carousel";
@@ -16,27 +16,27 @@ type Props = {
 };
 
 type State = {
-	entries: Array<Object>,
+	// entries: Array<Object>,
 };
 
 export class CardViewComp extends PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		this.state = { entries: props.entries };
+		// this.state = { entries: props.entries };
 	}
 
 	static getDerivedStateFromProps(nextProps, prevState) {
-		if (nextProps.entries != prevState.entries) {
-			return { entries: nextProps.entries };
-		}
+		// if (nextProps.entries != prevState.entries) {
+		// 	return { entries: nextProps.entries };
+		// }
 		return null;
 	}
 
 	renderItem = ({ item, index }) => {
 		return (
-			<TouchbleOpacity
+			<TouchableOpacity
 				onPress={() => {
-					this.props.onPress(item.id, item.type);
+					this.props.onPress(item.id, item.type, item.title);
 				}}
 				style={styles.slide}
 			>
@@ -53,11 +53,12 @@ export class CardViewComp extends PureComponent<Props, State> {
 					<Image style={styles.directionImg} source={Images.directionImg} resizeMode={"contain"} />
 					<SmallText style={styles.dirText} text={"Direction"} />
 				</View>
-			</TouchbleOpacity>
+			</TouchableOpacity>
 		);
 	};
 
 	render() {
+        const {entries} = this.props
 		return (
 			<Carousel
 				ref={c => {
@@ -72,7 +73,7 @@ export class CardViewComp extends PureComponent<Props, State> {
 					height: ScaleSampDesgHeight(114),
 					flex: 0,
 				}}
-				data={this.state.entries}
+				data={entries}
 				renderItem={this.renderItem}
 				sliderWidth={ScaleSampDesgWidth(360)}
 				itemWidth={ScaleSampDesgWidth(330)}
@@ -81,10 +82,7 @@ export class CardViewComp extends PureComponent<Props, State> {
 		);
 	}
 }
-// sliderWidth={fullWidth}
-// itemWidth={fullWidth - 160}
-// data={props.familyStatisticData}
-// renderItem={this.renderItem}
+
 const styles = StyleSheet.create({
 	title: {},
 	slide: {

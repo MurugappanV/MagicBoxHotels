@@ -5,8 +5,8 @@
  * @flow
  */
 import React, { PureComponent } from "react";
-import { FlatList, Modal, View, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { StatusBarComp, MediumText, MapViewComp, CardViewComp } from "../../components";
+import { Text, FlatList, Modal, View, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { StatusBarComp, MediumText, LoadingIndicatorComp } from "../../components";
 import {
 	Images,
 	Colors,
@@ -52,22 +52,23 @@ export class Route extends PureComponent<Props, State> {
 	}
 
 	componentDidMount = () => {
-		fetchRoute();
+		this.fetchRoute();
 	};
 
 	componentWillUnmount = () => {};
 
 	fetchRoute = () => {
-		this.setState({ routes: response, loading: true });
+		this.setState({ routes: null, loading: true });
 		const { userLatitude, userLongitude, placeId } = this.state;
 		PlaceRouteApi(userLatitude, userLongitude, placeId, this.onDataFetched, this.onDataFetchFailed);
 	};
 
-	onDataFetched = (type, response) => {
+	onDataFetched = (response) => {
+        console.log('resp', response)
 		this.setState({ routes: response, loading: false });
 	};
 
-	onDataFetchFailed = (type, response) => {
+	onDataFetchFailed = (response) => {
 		this.setState({ routes: null, loading: false });
 	};
 
@@ -81,7 +82,7 @@ export class Route extends PureComponent<Props, State> {
                         : inst.toLowerCase().includes("left")
                         ? Images.leftImg
                         : Images.rightImg,
-                    title: getDataFromHtml(inst),
+                    title: this.getDataFromHtml(inst),
                     distance: step.distance.text,
                 };
             });
@@ -98,7 +99,7 @@ export class Route extends PureComponent<Props, State> {
 
 	getFooter = (routes: any, type: string, name: string) => {
 		return {
-            image: type == DefaultValues.ATM ? Images.atmImg: Images: atmImg,
+            image: type == DefaultValues.ATM ? Images.atmImg: Images.atmImg,
             title: name,
 			address: routes.end_address,
 		};
@@ -117,6 +118,7 @@ export class Route extends PureComponent<Props, State> {
     };
     
     renderHeader = (headerData) => {
+        console.log('header render ', headerData)
         return <View style={styles.headerContainer}>
             <TouchableOpacity style={styles.backContainer}>
                 <Image
@@ -133,6 +135,7 @@ export class Route extends PureComponent<Props, State> {
     }
 
     renderListItem = (item) => {
+        console.log('item render ', item)
         return <View style={styles.listItemContainer}>
             <View style={styles.itemImgContainer}>
                 <Image style={styles.itemImg} source={item.image} resizeMode={"contain"} />
@@ -141,6 +144,7 @@ export class Route extends PureComponent<Props, State> {
                 <Text style={styles.itemTitleText}>{item.title}</Text>
                 <Text style={styles.itemDistanceText}>{item.distance}</Text>
             </View>
+            <View style={styles.listSeperator}/>
         </View>
     }
 
@@ -151,16 +155,17 @@ export class Route extends PureComponent<Props, State> {
     renderList = (listData) => {
         return <FlatList
             style={styles.listcontainer}
-            renderItem={({item, index}) => this.renderItem(item)}
+            renderItem={({item, index}) => this.renderListItem(item)}
             ItemSeparatorComponent={this.renderSeperator}
             ListEmptyComponent={() => this.renderEmpty(this.state.loading)}
             ListFooterComponent={() => this.renderListFooter(this.state.loading)}
             data={listData}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index+ ""}
         />
     }
 
     renderListFooter = (loading) => {
+        console.log('list footer render ', loading)
         if(loading) {
             return <LoadingIndicatorComp style={styles.footer}/>
         }
@@ -168,6 +173,7 @@ export class Route extends PureComponent<Props, State> {
     }
 
     renderEmpty = (loading) => {
+        console.log('empty render ', !loading)
         if(!loading ) {
             return <View style={styles.empty}>
                 <MediumText style={styles.textNoDocument} text={'No documents found'}/>
@@ -177,6 +183,7 @@ export class Route extends PureComponent<Props, State> {
     }
 
     renderFooter = (footerData) => {
+        console.log('footer render ', footerData)
         return <View style={styles.footerContainer}>
             <Image style={styles.footerImg} source={footerData.image} resizeMode={"contain"} />
             <View style={styles.footerViewContainer}>
@@ -190,12 +197,13 @@ export class Route extends PureComponent<Props, State> {
     
 	render() {
 		const { routes, type, name } = this.state;
+        console.log('routes render ', name)
 		return (
 			<View style={styles.container}>
 				<StatusBarComp />
-				{!!routes && this.renderHeader(getHeader(routes))}
-				{this.renderList(getDisplayRoutes(routes))}
-				{!!routes && this.renderFooter(getFooter(routes, type, name))}
+				{!!routes && this.renderHeader(this.getHeader(routes))}
+				{this.renderList(this.getDisplayRoutes(routes))}
+				{!!routes && this.renderFooter(this.getFooter(routes, type, name))}
 			</View>
 		);
 	}
@@ -225,7 +233,8 @@ const styles = StyleSheet.create({
     },
     backImg: {
 		width: ScaleMinSampleDesg(20, 20),
-		height: ScaleMinSampleDesg(20, 20),
+        height: ScaleMinSampleDesg(20, 20),
+        tintColor: Colors.bgPrimaryLight
     },
     headerTextContainer: {
         paddingTop: ScaleSampDesgHeight(12),
@@ -244,7 +253,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     listItemContainer: {
-        paddingTop: ScaleSampDesgHeight(20)
+        paddingTop: ScaleSampDesgHeight(20),
+        flexDirection: 'row'
     },
     itemImgContainer: {
         width: ScaleSampDesgWidth(60),

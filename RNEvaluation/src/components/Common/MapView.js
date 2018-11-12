@@ -15,29 +15,25 @@ type Props = {
 };
 
 type State = {
-	region: any,
-	markers: Array<Object>,
+	// region: any,
+	// markers: Array<Object>,
 };
 
 export class MapViewComp extends PureComponent<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		this.state = { region: props.region, markers: props.markers };
+		// this.state = { region: props.region, markers: props.markers };
 	}
 
 	static getDerivedStateFromProps(nextProps: Props, prevState: State) {
-		if (nextProps.markers != prevState.markers) {
-			return { markers: nextProps.markers };
-		}
+		// if (nextProps.markers != prevState.markers) {
+		// 	return { markers: nextProps.markers };
+		// }
 		return null;
 	}
 
-	onRegionChange = (region: any) => {
-		this.setState({ region });
-	};
-
 	renderMarkers = (markers: Array<Object>) => {
-		return this.state.markers.map(marker => (
+		return markers.map(marker => (
 			<Marker key={marker.id} showsUserLocation={true} coordinate={marker.latlng}>
 				<Image
 					style={styles.markerImg}
@@ -55,15 +51,14 @@ export class MapViewComp extends PureComponent<Props, State> {
 	};
 
 	render() {
-		console.log("render map ------------------");
+        const {region, markers} = this.props
 		return (
 			<MapView
 				provider={PROVIDER_GOOGLE}
 				style={styles.map}
-				region={this.state.region}
-				// onRegionChange={this.onRegionChange}
+				region={this.props.region}
 			>
-				{this.renderMarkers(this.state.markers)}
+				{this.renderMarkers(this.props.markers)}
 			</MapView>
 		);
 	}
@@ -78,14 +73,3 @@ const styles = StyleSheet.create({
 		height: ScaleSampDesgWidth(39),
 	},
 });
-
-// getInitialState() {
-// 	return {
-// 		region: {
-// 			latitude: 37.78825,
-// 			longitude: -122.4324,
-// 			latitudeDelta: 0.0922,
-// 			longitudeDelta: 0.0421,
-// 		},
-// 	};
-// }

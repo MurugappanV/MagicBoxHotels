@@ -24,13 +24,13 @@ export class Navigator extends PureComponent<Props, State> {
 		NetInfo.isConnected.addEventListener("connectionChange", this.handleConnectivityChange);
 	}
 
-	handleConnectivityChange = (isConnected: boolean) => {
-		this.setState({ isConnected });
-	};
-
 	componentWillUnmount() {
 		NetInfo.isConnected.removeEventListener("connectionChange", this.handleConnectivityChange);
 	}
+
+	handleConnectivityChange = (isConnected: boolean) => {
+		this.setState({ isConnected });
+	};
 
 	render() {
 		if (this.state.isConnected) {

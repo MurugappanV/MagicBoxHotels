@@ -3,11 +3,12 @@ import { API_KEY } from "../Defaults";
 
 export const PlaceRouteApi = (lat, long, placeId, success, failure) => {
 	let url = `directions/json?origin=${lat}, ${long}&destination=place_id:${placeId}&mode=walking&key=${API_KEY}`;
-	BaseAxiosInstance.get(url)
+    console.log("url", url)
+    BaseAxiosInstance.get(url)
 		.then(function(response) {
 			console.log("settings response", response);
-			if (response.data.routes != null) {
-				success(response.data.routes.legs[0]);
+			if (response.data.routes != null && response.data.routes.length > 0) {
+				success(response.data.routes[0].legs[0]);
 			} else {
 				failure(response);
 			}
